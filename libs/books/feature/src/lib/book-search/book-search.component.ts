@@ -9,40 +9,38 @@ import {
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'tmo-book-search',
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit,OnDestroy {
-  private subscription;
-  books: ReadingListBook[];
+export class BookSearchComponent implements OnInit, OnDestroy {
+  searchTerm = "";
+  books$: Observable<ReadingListBook[]> = this.store.select(getAllBooks);
 
-  searchForm = this.fb.group({
+  searchForm = this.formBuilder.group({
     term: ''
   });
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
-  ) {}
+    private readonly formBuilder: FormBuilder
+  ) { }
+  
+  ngOnInit() {
 
-  get searchTerm(): string {
-    return this.searchForm.value.term;
+    this.searchForm.get("term").valueChanges.subscribe(selectedValue => {
+
+      this.searchTerm = selectedValue;
+    })
+
   }
-
-  ngOnInit(): void {
-    this.subscription = this.store.select(getAllBooks).subscribe(books => {
-      this.books = books;
-    });
-  }
-
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+
   }
+
 
   formatDate(date: void | string) {
     return date
