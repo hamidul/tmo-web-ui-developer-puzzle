@@ -94,7 +94,7 @@ export class ReadingListEffects implements OnInitEffects {
 
   openSnackBar(item: ReadingListItem | Book, message: string, isAdded: boolean): void {
     this.snackBar.open(message, 'UNDO', {
-      duration: 5000
+      duration: 3000
     })
       .onAction()
       .subscribe(() =>

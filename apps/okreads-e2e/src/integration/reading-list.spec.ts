@@ -50,6 +50,6 @@ describe('When: I use the reading list feature', () => {
     //undo remove from reading list
     cy.get('.mat-simple-snackbar-action button').click();
 
-    cy.get('[data-testing="reading-list-item"]').should('have.length', count + 1);
+   cy.get('[data-testing="reading-list-item"]', { multiple: true }).should('have.length', count + 1);
   });
 });
