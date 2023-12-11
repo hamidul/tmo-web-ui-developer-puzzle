@@ -6,7 +6,16 @@ const KEY = '[okreads API] Reading List';
 
 @Injectable()
 export class ReadingListService {
+
   private readonly storage = new StorageService<ReadingListItem[]>(KEY, []);
+  async completeReadingBook(id: any, item: ReadingListItem):Promise<void> {
+    this.storage.update(list => {
+      return list.map(book => {
+        return book.bookId !== id ? book : { ...book, finishedDate: item.finishedDate, finished: item.finished };
+      });
+    });
+  }
+
 
   async getList(): Promise<ReadingListItem[]> {
     return this.storage.read();
@@ -28,4 +37,5 @@ export class ReadingListService {
       return list.filter(x => x.bookId !== id);
     });
   }
+  
 }

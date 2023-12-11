@@ -18,7 +18,7 @@ export interface BooksPartialState {
 export const booksAdapter: EntityAdapter<Book> = createEntityAdapter<Book>();
 
 export const initialState: State = booksAdapter.getInitialState({
-  loaded: false
+  loaded: true
 });
 
 const booksReducer = createReducer(
