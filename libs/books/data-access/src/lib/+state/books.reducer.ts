@@ -9,7 +9,6 @@ export const BOOKS_FEATURE_KEY = 'books';
 export interface State extends EntityState<Book> {
   loaded: boolean;
   error?: string | null;
-  searchTerm?: string;
 }
 
 export interface BooksPartialState {
@@ -26,7 +25,6 @@ const booksReducer = createReducer(
   initialState,
   on(BooksActions.searchBooks, (state, { term }) => ({
     ...state,
-    searchTerm: term,
     loaded: false,
     error: null
   })),
